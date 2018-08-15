@@ -1,22 +1,15 @@
-﻿using System;
+﻿using Common.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Common.Models
 {
-    public class StationModel : IStation
+    public class StationModel : IStationModel
     {
         public int StationId { get; set; }
 
-        private bool IsOccupied { get; set; }
-
         public FlightModel FlightInStation { get; set; }
-
-        private List<StationModel> NextTakeOffStations { get; set; }
-
-        private List<StationModel> NextLandingStations { get; set; }
-
-        private LinkedList<StationModel> StationWaitingList { get; set; }
 
         public void SendFlightToNextStation()
         {
@@ -26,9 +19,57 @@ namespace Common.Models
             // action of movment in the server
         }
 
+        public int ListSize()
+        {
+            return StationWaitingList.Count;
+        }
+
+        public void AddToWaitingLis(IStationModel station)
+        {
+            StationWaitingList.Enqueue(station);
+            if (IsOccupied != true)
+                TakeNextFlightRequest();
+        }
+
+
+
+        private bool IsOccupied { get; set; }
+
+        private IStationModel curentHandler;
+
+        private List<IStationModel> NextTakeOffStations { get; set; }
+
+        private List<IStationModel> NextLandingStations { get; set; }
+
+        private Queue<IStationModel> StationWaitingList { get; set; }
+
         private void TakeNextFlightRequest()
         {
-            throw new NotImplementedException();
+            if (StationWaitingList.Count > 0)
+            {
+                curentHandler = StationWaitingList.Dequeue();
+                IsOccupied = true;
+                // handel the flight - frezz for timer
+                if (curentHandler.FlightInStation.IsDeparture)
+                    AskToMoveNextStation(NextTakeOffStations);
+                else
+                    AskToMoveNextStation(NextLandingStations);
+            }
+        }
+
+        private void AskToMoveNextStation(List<IStationModel> handleredList)
+        {
+            int x = handleredList[0].ListSize();
+            int index = 0;
+            for (int i = 1; i < handleredList.Count; i++)
+            {
+                if (x > handleredList[i].ListSize())
+                {
+                    x = handleredList[i].ListSize();
+                    index = i;
+                }
+            }
+            handleredList[index].AddToWaitingLis(this);
         }
     }
 }
