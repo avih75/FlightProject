@@ -10,5 +10,6 @@ namespace Common.Interfaces
         FlightModel FlightInStation { get; set; }
         int ListSize();
         void AddToWaitingLis(IStationModel station);
+        void TurnOnStation(List<IStationModel> landList, List<IStationModel> departList, int id);
     }
 }

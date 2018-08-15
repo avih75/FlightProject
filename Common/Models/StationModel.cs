@@ -31,7 +31,13 @@ namespace Common.Models
                 TakeNextFlightRequest();
         }
 
-
+        public void TurnOnStation(List<IStationModel> landList, List<IStationModel> departList, int id)
+        {
+            StationId = id;
+            NextTakeOffStations = departList;
+            NextLandingStations = landList;
+            while (true) ;
+        }
 
         private bool IsOccupied { get; set; }
 
