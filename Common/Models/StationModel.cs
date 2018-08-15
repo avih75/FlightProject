@@ -18,11 +18,17 @@ namespace Common.Models
 
         private LinkedList<StationModel> StationWaitingList { get; set; }
 
-        public void SendFlightToMe()
+        public void SendFlightToNextStation()
         {
             IsOccupied = false;
             FlightInStation = null;
+            TakeNextFlightRequest();
             // action of movment in the server
+        }
+
+        private void TakeNextFlightRequest()
+        {
+            throw new NotImplementedException();
         }
     }
 }
