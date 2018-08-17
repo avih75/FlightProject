@@ -18,7 +18,7 @@ namespace Common.Models
 
         public string FlightName { get; set; }
 
-        public DateTime PlanedTime { get; set; }
+        public DateTime Time { get; set; }
 
         public TimeSpan NededTimeInStation()
         {
@@ -27,7 +27,7 @@ namespace Common.Models
 
         public override string ToString()
         {
-            return string.Format($"Name : {FlightName }  plain : {Plain.Name}  Date : {PlanedTime}  isDeparture : {IsDeparture}");
+            return string.Format($"Name : {FlightName }  plain : {Plain.Name}  Date : {Time}  isDeparture : {IsDeparture}");
         }
     }
 }
