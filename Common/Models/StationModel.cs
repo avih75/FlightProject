@@ -11,12 +11,11 @@ namespace Common.Models
 
         public FlightModel FlightInStation { get; set; }
 
-        public void SendFlightToNextStation()
+        public void SendFlightToNextStation(FlightModel flight)
         {
             IsOccupied = false;
             FlightInStation = null;
             TakeNextFlightRequest();
-            // action of movment in the server
         }
 
         public int ListSize()
@@ -55,6 +54,7 @@ namespace Common.Models
             {
                 curentHandler = StationWaitingList.Dequeue();
                 IsOccupied = true;
+                curentHandler.SendFlightToNextStation(curentHandler.FlightInStation);
                 // handel the flight - frezz for timer
                 if (curentHandler.FlightInStation.IsDeparture)
                     AskToMoveNextStation(NextTakeOffStations);
@@ -65,17 +65,31 @@ namespace Common.Models
 
         private void AskToMoveNextStation(List<IStationModel> handleredList)
         {
-            int x = handleredList[0].ListSize();
-            int index = 0;
-            for (int i = 1; i < handleredList.Count; i++)
+            if (handleredList.Count > 0)
             {
-                if (x > handleredList[i].ListSize())
+                int x = handleredList[0].ListSize();
+                int index = 0;
+                for (int i = 1; i < handleredList.Count; i++)
                 {
-                    x = handleredList[i].ListSize();
-                    index = i;
+                    if (x > handleredList[i].ListSize())
+                    {
+                        x = handleredList[i].ListSize();
+                        index = i;
+                    }
                 }
+                handleredList[index].AddToWaitingLis(this);
             }
-            handleredList[index].AddToWaitingLis(this);
+            else
+            {
+                MoveFlightOutFromLastStation();
+            }
+        }
+
+        private void MoveFlightOutFromLastStation()
+        {
+            IsOccupied = false;
+            FlightInStation = null;
+            TakeNextFlightRequest();
         }
     }
 }
