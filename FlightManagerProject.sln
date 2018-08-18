@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadarFlight", "RadarFlight\RadarFlight.csproj", "{FB395368-D5B5-4EB9-BAD7-5FDF354C3624}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server\Server.csproj", "{920FDFE9-8285-450E-A27E-B1C6931873FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,22 @@ Global
 		{FB395368-D5B5-4EB9-BAD7-5FDF354C3624}.Release|x86.ActiveCfg = Release|x86
 		{FB395368-D5B5-4EB9-BAD7-5FDF354C3624}.Release|x86.Build.0 = Release|x86
 		{FB395368-D5B5-4EB9-BAD7-5FDF354C3624}.Release|x86.Deploy.0 = Release|x86
+		{920FDFE9-8285-450E-A27E-B1C6931873FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{920FDFE9-8285-450E-A27E-B1C6931873FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{920FDFE9-8285-450E-A27E-B1C6931873FE}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{920FDFE9-8285-450E-A27E-B1C6931873FE}.Debug|ARM.Build.0 = Debug|Any CPU
+		{920FDFE9-8285-450E-A27E-B1C6931873FE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{920FDFE9-8285-450E-A27E-B1C6931873FE}.Debug|x64.Build.0 = Debug|Any CPU
+		{920FDFE9-8285-450E-A27E-B1C6931873FE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{920FDFE9-8285-450E-A27E-B1C6931873FE}.Debug|x86.Build.0 = Debug|Any CPU
+		{920FDFE9-8285-450E-A27E-B1C6931873FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{920FDFE9-8285-450E-A27E-B1C6931873FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{920FDFE9-8285-450E-A27E-B1C6931873FE}.Release|ARM.ActiveCfg = Release|Any CPU
+		{920FDFE9-8285-450E-A27E-B1C6931873FE}.Release|ARM.Build.0 = Release|Any CPU
+		{920FDFE9-8285-450E-A27E-B1C6931873FE}.Release|x64.ActiveCfg = Release|Any CPU
+		{920FDFE9-8285-450E-A27E-B1C6931873FE}.Release|x64.Build.0 = Release|Any CPU
+		{920FDFE9-8285-450E-A27E-B1C6931873FE}.Release|x86.ActiveCfg = Release|Any CPU
+		{920FDFE9-8285-450E-A27E-B1C6931873FE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

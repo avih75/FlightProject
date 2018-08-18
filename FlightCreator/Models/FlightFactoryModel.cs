@@ -23,7 +23,7 @@ namespace FlightCreator.Models
                 FlightName = flightName,
                 IsDeparture = isDeparture,
                 Plain = plain,
-                PlanedTime = planedTime
+                Time = planedTime
             };
 
         }

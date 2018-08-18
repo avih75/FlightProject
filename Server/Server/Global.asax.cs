@@ -21,20 +21,20 @@ namespace Server
     {
         protected void Application_Start()
         {
-            var container = new Container();
+            //var container = new Container();
 
-            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+            //container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
-            container.Register<IFlightsManager, FlightsManager>(Lifestyle.Scoped);
-            container.Register<IFlightsRepository, SqlFlightsRepository>(Lifestyle.Scoped);
+            //container.Register<IFlightsManager, FlightsManager>(Lifestyle.Scoped);
+            //container.Register<IFlightsRepository, SqlFlightsRepository>(Lifestyle.Scoped);
 
-            var activator = new SimpleInjectorHubActivator(container);
+            //var activator = new SimpleInjectorHubActivator(container);
 
-            GlobalHost.DependencyResolver.Register(typeof(IHubActivator), () => activator);
+            //GlobalHost.DependencyResolver.Register(typeof(IHubActivator), () => activator);
 
             
 
-            container.Verify();
+            //container.Verify();
 
 
 
