@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightCreator", "FlightCrea
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{0D8EB9FC-8BD6-42FB-AFF0-3B48999DA6F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadarFlight", "RadarFlight\RadarFlight.csproj", "{FB395368-D5B5-4EB9-BAD7-5FDF354C3624}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightsRadar", "RadarFlight\FlightsRadar.csproj", "{FB395368-D5B5-4EB9-BAD7-5FDF354C3624}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server\Server.csproj", "{920FDFE9-8285-450E-A27E-B1C6931873FE}"
 EndProject
