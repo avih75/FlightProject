@@ -1,5 +1,4 @@
-﻿using Server.Managers;
-using Server.Models;
+﻿using Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace Server.Interfaces
+namespace Common.Interfaces
 {
-    public interface IFlightsManager
-    {
+    public delegate void TimerElapsedEventHandler(int id);
 
+    public interface IFlightsTimeManager
+    {
         event TimerElapsedEventHandler TimerEventHandler;
 
         void TakeOff();

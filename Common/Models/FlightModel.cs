@@ -4,8 +4,6 @@ namespace Common.Models
 {
     public class FlightModel
     {
-        //private Random rnd = new Random();
-        // true - is outgoing  // false - is incoming
 
         public int ID { get; set; }
 
@@ -16,11 +14,6 @@ namespace Common.Models
         public string FlightName { get; set; }
 
         public DateTime Time { get; set; }
-
-        //public TimeSpan NededTimeInStation()
-        //{
-        //    return new TimeSpan(rnd.Next(0, 5000));
-        //}
 
         public PlainModel Plain { get; set; }
 

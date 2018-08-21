@@ -1,4 +1,5 @@
 ﻿using Common.Interfaces;
+using Common.Managers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +11,7 @@ namespace Common.Models
     public class StationManager : IStationModel
     {
         private static StationManager manager;
+        private readonly SignalRConnectionManager signalRConnectionManager;
         public static StationManager GetManager()
         {
             if (manager == null)

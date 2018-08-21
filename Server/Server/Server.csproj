@@ -122,12 +122,11 @@
   <ItemGroup>
     <Compile Include="Activators\SimpleInjectorHubActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\FlightsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\FlightsHub.cs" />
-    <Compile Include="Interfaces\IFlightsManager.cs" />
-    <Compile Include="Managers\FlightsManager.cs" />
     <Compile Include="Models\FlightTimeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -145,9 +144,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BL\BL.csproj">
+      <Project>{e5df5f26-4310-4cc3-b17a-1431aa7b4f2c}</Project>
+      <Name>BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{BD0E3CC9-A6D7-4C28-9630-CD92D57A60A3}</Project>
       <Name>Common</Name>

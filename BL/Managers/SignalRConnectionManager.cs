@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.SignalR.Client;
 
-namespace Common.Managers
+namespace BL.Managers
 {
     public class SignalRConnectionManager
     {

@@ -14,7 +14,7 @@ namespace Server
         {
             GlobalHost.DependencyResolver.Register(
         typeof(FlightsHub),
-        () => new FlightsHub(new SqlFlightsRepository(), new FlightsManager(), new FlightsManager()));
+        () => new FlightsHub(new SqlFlightsRepository(), new FlightsTimeManager(), new FlightsTimeManager()));
 
             app.MapSignalR();
         }

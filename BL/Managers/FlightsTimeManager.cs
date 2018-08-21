@@ -1,15 +1,16 @@
-﻿using Server.Interfaces;
-using Server.Models;
+﻿using Common.Interfaces;
+using Common.Models;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Timers;
 
-namespace Server.Managers
+namespace BL.Managers
 {
-    public delegate void TimerElapsedEventHandler(int id);
-
-    public class FlightsManager : IFlightsManager
+    public class FlightsTimeManager : IFlightsTimeManager
     {
+        public event TimerElapsedEventHandler TimerEventHandler;
+
         private LinkedList<FlightTimeModel> _flightTimeModels;
 
         private object _lockObject;
@@ -23,12 +24,14 @@ namespace Server.Managers
                 return _flightTimeModels.First.Value;
             }
         }
-        public event TimerElapsedEventHandler TimerEventHandler;
+        
 
-        public FlightsManager()
+        public FlightsTimeManager()
         {
             SetManagerFields();
         }
+
+        
 
         private void SetManagerFields()
         {
@@ -125,5 +128,7 @@ namespace Server.Managers
         {
             return First.Id;
         }
+
+        
     }
 }

@@ -6,7 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 
-namespace Common.Data.SqlRepositories
+namespace DAL.Data.Repositories
 {
     public class SqlFlightsRepository : IFlightsRepository
     {
