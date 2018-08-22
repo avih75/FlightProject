@@ -1,4 +1,4 @@
-﻿using Common.Managers;
+﻿
 using Common.Models;
 using Microsoft.AspNet.SignalR.Client;
 using System;
@@ -14,11 +14,8 @@ namespace FlightCreator
     {
         static Models.FlightFactoryModel factoryFlight;
         static Timer timer;
-        static SignalRConnectionManager signalRConnectionManager;
         static void Main(string[] args)
         {
-            signalRConnectionManager = new SignalRConnectionManager();
-            signalRConnectionManager.StartConnection();
             factoryFlight = new Models.FlightFactoryModel();
             timer = new Timer
             {
@@ -33,7 +30,7 @@ namespace FlightCreator
             FlightModel newFlight = factoryFlight.CreateFlight();
             Console.WriteLine(newFlight.ToString());
             // Api Call To Server Send New Flight
-            signalRConnectionManager.Invoke("Recive", newFlight);
+            //signalRConnectionManager.Invoke("Recive", newFlight);
         }
     }
 }

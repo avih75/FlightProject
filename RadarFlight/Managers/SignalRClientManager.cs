@@ -1,13 +1,18 @@
 ﻿using Microsoft.AspNet.SignalR.Client;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace BL.Managers
+namespace RadarFlight.Managers
 {
-    public class SignalRConnectionManager
+    public class SignalRClientManager
     {
         private readonly HubConnection hubConnection;
         private readonly IHubProxy hubProxy;
 
-        public SignalRConnectionManager()
+        public SignalRClientManager()
         {
             hubConnection = new HubConnection("http://localhost:54780/");
             hubProxy = hubConnection.CreateHubProxy("FlightsHub");

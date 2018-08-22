@@ -1,10 +1,10 @@
-﻿using Common.Data.SqlRepositories;
+﻿using BL.Managers;
+using DAL.Data.Repositories;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Owin;
 using Server;
 using Server.Hubs;
-using Server.Managers;
 
 namespace Server
 {
@@ -12,10 +12,6 @@ namespace Server
     {
         public void Configuration(IAppBuilder app)
         {
-            GlobalHost.DependencyResolver.Register(
-        typeof(FlightsHub),
-        () => new FlightsHub(new SqlFlightsRepository(), new FlightsTimeManager(), new FlightsTimeManager()));
-
             app.MapSignalR();
         }
     }

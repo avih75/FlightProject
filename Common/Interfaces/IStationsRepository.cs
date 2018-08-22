@@ -7,14 +7,14 @@ namespace Common.Interfaces
 {
     public interface IStationsRepository
     {
-        StationModel GetStation(int stationId);
+        ActiveStationModel GetStation(int stationId);
 
-        IEnumerable<StationModel> GetAll();
+        IEnumerable<ActiveStationModel> GetAll();
 
-        void Add(StationModel station);
+        void Add(ActiveStationModel station);
 
         void Remove(int StationId);
 
-        void Update(StationModel station);
+        void Update(ActiveStationModel station);
     }
 }

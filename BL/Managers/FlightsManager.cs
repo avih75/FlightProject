@@ -17,6 +17,7 @@ namespace BL.Managers
 
         private event TimerEventHandler _timerEventHandler;
 
+        
         public FlightsManager(IFlightsRepository flightsRepository, IFlightsTimeManager departureFlightsManager, IFlightsTimeManager landingFlightsRepository)
         {
             _flightsRepository = flightsRepository;
@@ -28,8 +29,8 @@ namespace BL.Managers
 
         private void RegisterGetInEvent()
         {
-            _departureFlightsManager.TimerEventHandler += OnGetInEvent;
-            _landingFlightsManager.TimerEventHandler += OnGetInEvent;
+            _departureFlightsManager.TimerEventHandler += OnTimerEvent;
+            _landingFlightsManager.TimerEventHandler += OnTimerEvent;
         }
 
 
@@ -49,7 +50,7 @@ namespace BL.Managers
 
         }
 
-        private void OnGetInEvent(int id)
+        private void OnTimerEvent(int id)
         {
             FlightModel flight = _flightsRepository.GetFlight(id);
             _timerEventHandler.Invoke(flight);

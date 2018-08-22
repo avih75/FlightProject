@@ -11,11 +11,11 @@ namespace FlightsManagerDAL.Data
     {
         protected override void Seed(Context context)
         {
-            StationModel station1 = new StationModel();
-            StationModel station2 = new StationModel();
-            StationModel station3 = new StationModel();
-            StationModel station4 = new StationModel();
-            StationModel station5 = new StationModel();
+            ActiveStationModel station1 = new ActiveStationModel();
+            ActiveStationModel station2 = new ActiveStationModel();
+            ActiveStationModel station3 = new ActiveStationModel();
+            ActiveStationModel station4 = new ActiveStationModel();
+            ActiveStationModel station5 = new ActiveStationModel();
 
             
         }

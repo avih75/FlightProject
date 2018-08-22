@@ -8,20 +8,8 @@ using Server.Models;
 namespace Server.Hubs
 {
     [HubName("FlightsHub")]
-    public class FlightsHub : Hub, ICaller
+    public class FlightsHub : Hub
     {
-        private event OnGetInEventHandler OnGetInEventHandler;
-
-        public FlightModel GetIn(bool isLanding)
-        {
-            FlightModel flight = OnGetInEventHandler.Invoke(isLanding);
-            return flight;
-        }
-
-        public void RegisterGetInEvent(OnGetInEventHandler onGetIn)
-        {
-            OnGetInEventHandler += onGetIn;
-        }
 
     }
 }

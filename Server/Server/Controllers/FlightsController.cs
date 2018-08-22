@@ -16,22 +16,19 @@ namespace Server.Controllers
     {
         private readonly IFlightsManager _flightsManager;
 
-        private readonly ICaller _caller;
-
         private readonly IHubContext _hub;
 
         public FlightsController(IFlightsManager flightsManager, ICaller caller)
         {
             _flightsManager = flightsManager;
-            _caller = caller;
             _hub = GlobalHost.ConnectionManager.GetHubContext<FlightsHub>();
 
             _flightsManager.RegisterToTimerEvent(OnTimerEvent);
-            _caller.RegisterGetInEvent(OnGetIn);
         }
+
         [HttpPost]
         [ResponseType(typeof(FlightModel))]
-        public IHttpActionResult Add(FlightModel flight)
+        public IHttpActionResult AddFlight(FlightModel flight)
         {
             if (!ModelState.IsValid)
             {
@@ -42,10 +39,19 @@ namespace Server.Controllers
             return CreatedAtRoute("DefaultApi", new { id = flight.ID }, flight);
         }
 
-        private FlightModel OnGetIn(bool isLanding)
+        [HttpGet]
+        [ResponseType(typeof(FlightModel))]
+        public IHttpActionResult GetFlight(bool isLanding)
         {
-            return _flightsManager.GetFlight(isLanding);
+            var flight = _flightsManager.GetFlight(isLanding);
+            if (flight == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(flight);
         }
+        
 
 
         private void OnTimerEvent(FlightModel flightModel)
