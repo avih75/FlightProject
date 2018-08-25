@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,6 +10,9 @@ namespace Common.Models
         public int Id { get; set; }
 
         public bool IsOccupied { get; set; }
+
+        public StripEnum Strip { get; set; }
+
 
         public int? PlainId { get; set; }
 

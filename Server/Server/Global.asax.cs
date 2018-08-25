@@ -11,6 +11,8 @@ using Common.Interfaces;
 using Server.Activators;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using DAL.Data.Repositories;
+using BL.Managers;
 
 namespace Server
 {
@@ -18,20 +20,19 @@ namespace Server
     {
         protected void Application_Start()
         {
-            //var container = new Container();
+            var container = new Container();
 
-            //container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
-            //container.Register<IFlightsManager, FlightsManager>(Lifestyle.Scoped);
-            //container.Register<IFlightsRepository, SqlFlightsRepository>(Lifestyle.Scoped);
+            container.Register<IFlightsRepository, SqlFlightsRepository>(Lifestyle.Scoped);
+            container.Register<IFlightsManager, FlightsManager>(Lifestyle.Scoped);
+            container.Register<IFlightsTimeManager, FlightsTimeManager>(Lifestyle.Scoped);
 
-            //var activator = new SimpleInjectorHubActivator(container);
+            container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
 
-            //GlobalHost.DependencyResolver.Register(typeof(IHubActivator), () => activator);
+            container.Verify();
 
-            
-
-            //container.Verify();
+            GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
 
 
 
