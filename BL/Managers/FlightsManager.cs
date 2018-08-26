@@ -11,9 +11,9 @@ namespace BL.Managers
     {
         private readonly IFlightsRepository _flightsRepository;
 
-        private readonly IFlightsTimeManager _departureFlightsManager;
+        private readonly IFlightsTimeManager _departureFlightsTimeManager;
 
-        private readonly IFlightsTimeManager _landingFlightsManager;
+        private readonly IFlightsTimeManager _landingFlightsTimeManager;
 
         private event TimerEventHandler _timerEventHandler;
 
@@ -21,18 +21,13 @@ namespace BL.Managers
         public FlightsManager(IFlightsRepository flightsRepository, IFlightsTimeManager departureFlightsManager, IFlightsTimeManager landingFlightsRepository)
         {
             _flightsRepository = flightsRepository;
-            _departureFlightsManager = departureFlightsManager;
-            _landingFlightsManager = landingFlightsRepository;
-            RegisterGetInEvent();
+            _departureFlightsTimeManager = departureFlightsManager;
+            _landingFlightsTimeManager = landingFlightsRepository;
+
+            _departureFlightsTimeManager.TimerEventHandler += OnTimerEvent;
+            _landingFlightsTimeManager.TimerEventHandler += OnTimerEvent;
         }
-
-
-        private void RegisterGetInEvent()
-        {
-            _departureFlightsManager.TimerEventHandler += OnTimerEvent;
-            _landingFlightsManager.TimerEventHandler += OnTimerEvent;
-        }
-
+        
 
         public void AddFlight(FlightModel flight)
         {
@@ -41,11 +36,11 @@ namespace BL.Managers
             FlightTimeModel timeModel = new FlightTimeModel(flight.ID, flight.Time);
             if (flight.IsDeparture)
             {
-                _departureFlightsManager.Add(timeModel);
+                _departureFlightsTimeManager.Add(timeModel);
             }
             else
             {
-                _landingFlightsManager.Add(timeModel);
+                _landingFlightsTimeManager.Add(timeModel);
             }
 
         }
@@ -67,13 +62,13 @@ namespace BL.Managers
 
             if (isLanding)
             {
-                flightId = _landingFlightsManager.GetFirstId();
-                _landingFlightsManager.TakeOff();
+                flightId = _landingFlightsTimeManager.GetFirstId();
+                _landingFlightsTimeManager.TakeOff();
             }
             else
             {
-                flightId = _departureFlightsManager.GetFirstId();
-                _departureFlightsManager.TakeOff();
+                flightId = _departureFlightsTimeManager.GetFirstId();
+                _departureFlightsTimeManager.TakeOff();
             }
             
             return _flightsRepository.GetFlight(flightId);

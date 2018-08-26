@@ -18,7 +18,7 @@ namespace Server.Controllers
 
         private readonly IHubContext _hub;
 
-        public FlightsController(IFlightsManager flightsManager, ICaller caller)
+        public FlightsController(IFlightsManager flightsManager)
         {
             _flightsManager = flightsManager;
             _hub = GlobalHost.ConnectionManager.GetHubContext<FlightsHub>();
