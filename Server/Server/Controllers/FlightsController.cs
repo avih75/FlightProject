@@ -34,7 +34,6 @@ namespace Server.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             _flightsManager.AddFlight(flight);
             return CreatedAtRoute("DefaultApi", new { id = flight.ID }, flight);
         }
@@ -51,8 +50,6 @@ namespace Server.Controllers
 
             return Ok(flight);
         }
-        
-
 
         private void OnTimerEvent(FlightModel flightModel)
         {
