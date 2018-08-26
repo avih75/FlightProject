@@ -28,13 +28,13 @@ namespace FlightCreator
             timer.Start();
             Console.Read();
         }
-        private static async void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        private static void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             FlightModel newFlight = factoryFlight.CreateFlight();
             Console.WriteLine(newFlight.ToString());
             var jsonObject = JsonConvert.SerializeObject(newFlight);
             var stringContent = new StringContent(jsonObject, UnicodeEncoding.UTF8, "application/json");
-            var response = await client.PostAsync(apiUrl, stringContent);
+            client.PostAsync(apiUrl, stringContent);
         }
     }
 }
