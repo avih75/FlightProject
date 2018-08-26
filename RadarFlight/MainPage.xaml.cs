@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RadarFlight.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,16 @@ namespace RadarFlight
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        RadarViewModel RadarViewModel { get; set; }
         public MainPage()
         {
             this.InitializeComponent();
+            Start();
+        }
+
+        private void Start()
+        {
+            RadarViewModel = new RadarViewModel(InMotion);
         }
     }
 }

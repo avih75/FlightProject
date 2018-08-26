@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,15 +12,35 @@ namespace RadarFlight.ViewModels
     public class RadarViewModel
     {
         //List<ActiveStationModel> StationsList { get; set; }
-        //List<FlightModel> FlightList { get; set; }
+        public List<FlightModel> FlightList { get; set; }
         //FirstStationModel startStationProp {get;set;notify();}
 
         public ICommand StartTheRadarClick;
 
-        public RadarViewModel()
+        public RadarViewModel(Grid inMotion)
         {
+            CreatFakeDataBAse();
             GetHubConection();
             CommandInit();
+        }
+
+        private void CreatFakeDataBAse()
+        {
+            FlightList = new List<FlightModel>();
+            FlightList.Add(new FlightModel()
+            {
+                FlightName = "AVI",
+                ID = 1,
+                IsDeparture = true,
+                Time = DateTime.Now
+            });
+            FlightList.Add(new FlightModel()
+            {
+                FlightName = "Eli",
+                ID = 2,
+                IsDeparture = false,
+                Time = DateTime.Now
+            });
         }
 
         private void CommandInit()
