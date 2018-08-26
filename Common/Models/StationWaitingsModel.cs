@@ -19,5 +19,10 @@ namespace Common.Models
         {
             WaitingStationsIds.Enqueue(waitingStationId);
         }
+
+        public int GetNextStation()
+        {
+            return WaitingStationsIds.Dequeue();
+        }
     }
 }

@@ -11,10 +11,14 @@ namespace BL.Managers
     {
         private readonly IStationsRepository _stationsRepository;
 
-        public StationsManager(IStationsRepository stationsRepository)
+        private readonly IStationsWaitingsManager _stationsWaitingsManager;
+
+        public StationsManager(IStationsRepository stationsRepository, IStationsWaitingsManager stationsWaitingsManager)
         {
             _stationsRepository = stationsRepository;
+            _stationsWaitingsManager = stationsWaitingsManager;
         }
+
         public IEnumerable<StationModel> GetAll()
         {
             return _stationsRepository.GetAll();
