@@ -11,7 +11,7 @@ namespace RadarFlight.ViewModels
 {
     public class RadarViewModel
     {
-        //List<ActiveStationModel> StationsList { get; set; }
+        private List<StationModel> StationsList { get; set; }
         public List<FlightModel> FlightList { get; set; }
         //FirstStationModel startStationProp {get;set;notify();}
 
@@ -41,7 +41,14 @@ namespace RadarFlight.ViewModels
                 IsDeparture = false,
                 Time = DateTime.Now
             });
-            StationManager sm = StationManager.GetManager();
+
+            StationsList.Add(new StationModel());
+            StationsList.Add(new StationModel());
+            StationsList.Add(new StationModel());
+            StationsList.Add(new StationModel());
+            StationsList.Add(new StationModel());
+            StationsList.Add(new StationModel());
+            StationsList.Add(new StationModel());
 
         }
 

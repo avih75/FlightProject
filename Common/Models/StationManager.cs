@@ -9,44 +9,42 @@ namespace Common.Models
 {
     public class StationManager : IStationModel
     {
-        private static StationManager manager;
-        //private readonly SignalRConnectionManager signalRConnectionManager;
-        public static StationManager GetManager()
-        {
-            if (manager == null)
-                manager = new StationManager();
-            return manager;
-        }
-
         List<IStationModel> baseDepartureStations;
         List<IStationModel> baseLandStations;
         List<IStationModel> mainList;
-        readonly int stationQuantity = 7;
+        readonly int stationQuantity;
+
+        public StationManager(int stationsNumber, string arivePaths, string DeparturePaths)
+        {   // the string should show the paths option   " 1/2,3,5,6/8,9 " example
+            stationQuantity = stationsNumber;
+            InstallStation(arivePaths, DeparturePaths);
+        }
 
 
-        private StationManager()
+        private async void InstallStation(string arivePaths, string DeparturePaths)
         {
-            InstallStation();
-            CreateHubConectionToServer();
-        }
-        private void CreateHubConectionToServer()
-        {
-            // throw new NotImplementedException();
-        }
-        private async void InstallStation()
-        {
+            // create the station (emptys)
             mainList = new List<IStationModel>();
             for (int i = 0; i < stationQuantity; i++)
             {
                 mainList.Add(new ActiveStationModel());
             }
+
             for (int i = 0; i < stationQuantity; i++)
             {
-                await PowerOnStation(i, new List<int> { }, new List<int> { });
+                List<int> nextDepartureStation = GetNextLists(i, DeparturePaths);
+                List<int> nextAriveStation = GetNextLists(i, arivePaths);
+                await PowerOnStation(i, nextDepartureStation, nextAriveStation);
             }
             baseDepartureStations = CreateIstationList(new List<int> { 0, 2 });
             baseLandStations = CreateIstationList(new List<int> { 6 });
         }
+
+        private List<int> GetNextLists(int i, string departurePaths)
+        {
+            throw new NotImplementedException();
+        }
+
         private List<IStationModel> CreateIstationList(List<int> stationsList)
         {
             List<IStationModel> temp = new List<IStationModel>();
@@ -90,8 +88,6 @@ namespace Common.Models
             }
             return stationToListedTo;
         }
-
-
 
         public FlightModel FlightInStation { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public void SendFlightToNextStation(FlightModel flight)
