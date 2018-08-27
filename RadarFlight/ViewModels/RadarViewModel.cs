@@ -19,12 +19,12 @@ namespace RadarFlight.ViewModels
 
         public RadarViewModel(Grid inMotion)
         {
-            CreatFakeDataBAse();
+            CreatFakeDataBase();
             GetHubConection();
             CommandInit();
         }
 
-        private void CreatFakeDataBAse()
+        private void CreatFakeDataBase()
         {
             FlightList = new List<FlightModel>();
             FlightList.Add(new FlightModel()
@@ -41,6 +41,8 @@ namespace RadarFlight.ViewModels
                 IsDeparture = false,
                 Time = DateTime.Now
             });
+            StationManager sm = StationManager.GetManager();
+
         }
 
         private void CommandInit()

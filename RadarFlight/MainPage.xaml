@@ -41,7 +41,7 @@
                     <ListView ItemsSource="{x:Bind RadarViewModel.FlightList}">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:FlightModel" >
-                                <StackPanel Background="Wheat" Padding="1,1,1,1" Orientation="Horizontal" HorizontalAlignment="Stretch" >
+                                <StackPanel Background="Wheat" Margin="1,1,1,1"  Padding="1,1,1,1" Orientation="Horizontal" HorizontalAlignment="Stretch" >
                                     <Image Source="{Binding IsDeparture,Converter={StaticResource BoolToImage}}" Width="50" Height="50"/>
                                     <TextBlock Margin="5,0,0,0" Text="{Binding FlightName}"/>
                                     <TextBlock Margin="5,0,0,0" Text="{Binding Plain.Name}"/>
