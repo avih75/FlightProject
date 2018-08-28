@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Common.Interfaces
 {
+    
     public interface IStationClient
     {
         void EvacuateStation();

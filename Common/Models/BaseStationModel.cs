@@ -10,6 +10,8 @@ namespace Common.Models
     {
         public bool IsStartingStation { get; set; }
 
+        public bool IsLastStation { get; set; }
+
         public StripEnum Strip { get; set; }
 
         public int StationID { get; set; }

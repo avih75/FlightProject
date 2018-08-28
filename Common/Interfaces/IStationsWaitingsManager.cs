@@ -1,16 +1,16 @@
-﻿using Common.Models;
+﻿using Common.Args;
+using Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Common.Interfaces
 {
+    public delegate void FlightEnterEventHandler(FlightEventArgs args);
     public interface IStationsWaitingsManager
     {
-        void FillStationsCollection(IEnumerable<BaseStationModel> stations);
+        void AddNewFlight(FlightModel flight);
 
-        void AddStationToQueueOf(int waitingStationId, int queueStationId);
-
-        int GetNextWaitingStationIdOf(int queueStationId);
+        void RegisterToFlightEvent(FlightEnterEventHandler onFlightEvent);
     }
 }

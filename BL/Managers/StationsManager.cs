@@ -24,5 +24,15 @@ namespace BL.Managers
             return _stationsRepository.GetAll();
         }
 
+        public void FlightTimeArrivedEvent(FlightModel flight)
+        {
+            _stationsWaitingsManager.AddNewFlight(flight);
+        }
+
+        public void RegisterToFlightEvent(FlightEnterEventHandler flightEnterEvent)
+        {
+            _stationsWaitingsManager.RegisterToFlightEvent(flightEnterEvent);
+        }
+
     }
 }

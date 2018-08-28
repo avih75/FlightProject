@@ -1,4 +1,5 @@
-﻿using Common.Interfaces;
+﻿using Common.Args;
+using Common.Interfaces;
 using Common.Models;
 using System;
 using System.Collections.Generic;
@@ -15,19 +16,29 @@ namespace BL.Managers
 
         private readonly IFlightsTimeManager _landingFlightsTimeManager;
 
+        private readonly IStationsManager _stationsManager;
+
         private event TimerEventHandler _timerEventHandler;
 
         
-        public FlightsManager(IFlightsRepository flightsRepository, IFlightsTimeManager departureFlightsManager, IFlightsTimeManager landingFlightsRepository)
+        public FlightsManager(IFlightsRepository flightsRepository, IFlightsTimeManager departureFlightsManager, IFlightsTimeManager landingFlightsRepository, IStationsManager stationsManager)
         {
             _flightsRepository = flightsRepository;
             _departureFlightsTimeManager = departureFlightsManager;
             _landingFlightsTimeManager = landingFlightsRepository;
+            _stationsManager = stationsManager;
 
             _departureFlightsTimeManager.TimerEventHandler += OnTimerEvent;
             _landingFlightsTimeManager.TimerEventHandler += OnTimerEvent;
+            _stationsManager.RegisterToFlightEvent(OnFlightEnterEvent);
         }
-        
+
+        private void OnFlightEnterEvent(FlightEventArgs args)
+        {
+            //updating queues
+            //notify client
+            //updating repository
+        }
 
         public void AddFlight(FlightModel flight)
         {
@@ -48,7 +59,8 @@ namespace BL.Managers
         private void OnTimerEvent(int id)
         {
             FlightModel flight = _flightsRepository.GetFlight(id);
-            _timerEventHandler.Invoke(flight);
+
+            _stationsManager.FlightTimeArrivedEvent(flight);
         }
 
         public void RegisterToTimerEvent(TimerEventHandler onTimerElapsed)

@@ -1,4 +1,5 @@
-﻿using Common.Interfaces;
+﻿using Common.Args;
+using Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,8 +7,12 @@ using System.Timers;
 
 namespace Common.Models
 {
+    public delegate void FlightEventHandler(FlightEventArgs args);
+
     public class StationModel : BaseStationModel, IStationClient
     {
+        private event FlightEventHandler _flightEvent;
+
         private readonly Timer timer;
 
         public StationModel()
@@ -19,6 +24,10 @@ namespace Common.Models
         private void FlightTimeEnded(object sender, ElapsedEventArgs e)
         {
             timer.Stop();
+            if (IsLastStation)
+            {
+                EvacuateStation();
+            }
             BaseStationModel nextStation;
             if (Flight.IsDeparture)
             {
@@ -46,6 +55,7 @@ namespace Common.Models
 
         public override void EvacuateStation()
         {
+            OnFlightMoveEvent();
             Flight = null;
             FlightId = null;
             if (WaitingStations.Count > 0)
@@ -59,6 +69,11 @@ namespace Common.Models
                 CallNextFlight();
         }
 
+        public void RegisterFlightEvent(FlightEventHandler flightEvent)
+        {
+            _flightEvent += flightEvent;
+        }
+
         private void CallNextFlight()
         {
             if (WaitingStations.Count > 0)
@@ -68,10 +83,22 @@ namespace Common.Models
                 WaitingStations.Remove(nextStation);
                 Flight = nextStation.Flight;
                 FlightId = nextStation.FlightId;
+                OnFlightMoveEvent();
                 nextStation.EvacuateStation();
                 timer.Interval = rnd.Next(1000, 5000);
                 timer.Start();
             }
+        }
+
+        private void OnFlightMoveEvent()
+        {
+            FlightEventArgs arg;
+            if (IsLastStation)
+                arg = new FlightEventArgs(Flight, null);
+            else
+                arg = new FlightEventArgs(Flight, StationID);
+
+            _flightEvent.Invoke(arg);
         }
     }
 }

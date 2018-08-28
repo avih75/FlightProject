@@ -1,4 +1,5 @@
 ﻿using BL.Models;
+using Common.Args;
 using Common.Enums;
 using Common.Interfaces;
 using Common.Models;
@@ -8,8 +9,11 @@ using System.Text;
 
 namespace BL.Managers
 {
-    public class StationWatingsManager
+    
+    public class StationWatingsManager: IStationsWaitingsManager
     {
+        private event FlightEnterEventHandler FlightEnterEvent;
+
         List<StationModel> baseDepartureStations;
         List<StationModel> baseLandStations;
 
@@ -30,6 +34,7 @@ namespace BL.Managers
             var stations = stationsRepository.GetAll();
             foreach (var station in stations)
             {
+                station.RegisterFlightEvent(OnFlightEvent);
                 if (station.IsStartingStation)
                 {
                     switch (station.Strip)
@@ -90,5 +95,15 @@ namespace BL.Managers
             return stationToReturn;
         }
 
+        public void RegisterToFlightEvent(FlightEnterEventHandler onFlightEvent)
+        {
+            FlightEnterEvent += onFlightEvent;
+        }
+
+        private void OnFlightEvent(FlightEventArgs args)
+        {
+            FlightEnterEvent.Invoke(args);
+        }
+        
     }
 }
