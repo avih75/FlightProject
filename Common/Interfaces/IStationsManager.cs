@@ -7,6 +7,6 @@ namespace Common.Interfaces
 {
     public interface IStationsManager
     {
-        IEnumerable<StationModel> GetAll();
+        IEnumerable<BaseStationModel> GetAll();
     }
 }

@@ -1,4 +1,6 @@
-﻿using Common.Interfaces;
+﻿using BL.Models;
+using Common.Enums;
+using Common.Interfaces;
 using Common.Models;
 using System;
 using System.Collections.Generic;
@@ -6,47 +8,87 @@ using System.Text;
 
 namespace BL.Managers
 {
-    public class StationWatingsManager: IStationsWaitingsManager
+    public class StationWatingsManager
     {
-        private ICollection<StationWaitingsModel> _stations;
+        List<StationModel> baseDepartureStations;
+        List<StationModel> baseLandStations;
 
-        public StationWatingsManager()
+        List<FlightModel> LandingFlights;
+        List<FlightModel> DepartureFlight;
+
+        readonly int stationQuantity;
+
+        public StationWatingsManager(IStationsRepository stationsRepository)
         {
-            _stations = new List<StationWaitingsModel>();
+            baseLandStations = new List<StationModel>();
+            baseDepartureStations = new List<StationModel>();
+            GenerateStations(stationsRepository);
         }
 
-        public void FillStationsCollection(IEnumerable<StationModel> stations)
+        private void GenerateStations(IStationsRepository stationsRepository)
         {
+            var stations = stationsRepository.GetAll();
             foreach (var station in stations)
             {
-                _stations.Add(new StationWaitingsModel(station.Id));
-            }
-        }
-
-        public void AddStationToQueueOf(int waitingStationId, int queueStationId)
-        {
-            foreach (var myCollectionStation in _stations)
-            {
-                if (myCollectionStation.StationId == queueStationId)
+                if (station.IsStartingStation)
                 {
-                    myCollectionStation.Add(waitingStationId);
-                    break;
+                    switch (station.Strip)
+                    {
+                        case StripEnum.AirStrip:
+                            baseDepartureStations.Add(station);
+                            break;
+                        case StripEnum.LandingStrip:
+                            baseLandStations.Add(station);
+                            break;
+                        default:
+                            baseDepartureStations.Add(station);
+                            baseLandStations.Add(station);
+                            break;
+                    }
                 }
             }
         }
 
-        public int GetNextWaitingStationIdOf(int queueStationId)
+        public void AddNewFlight(FlightModel flight)
         {
-            int nextStationId = 0;
+            if (flight.IsDeparture)
+                DepartureFlight.Add(flight);
+            else
+                LandingFlights.Add(flight);
+            MoveToBase(flight);
+        }
 
-            foreach (var station in _stations)
+        private void MoveToBase(FlightModel flight)
+        {
+            MokeStation newMoke;
+            StationModel nextStation;
+            if (flight.IsDeparture)
             {
-                if (station.StationId == queueStationId)
+                newMoke = new MokeStation(DepartureFlight, flight);
+                nextStation = GetShorterWatingListStation(baseDepartureStations);
+            }
+            else
+            {
+                newMoke = new MokeStation(LandingFlights, flight);
+                nextStation = GetShorterWatingListStation(baseLandStations);
+            }
+            nextStation.AddStation(newMoke);
+        }
+
+        private StationModel GetShorterWatingListStation(List<StationModel> stationList)
+        {
+            StationModel stationToReturn = null;
+            int min = int.MaxValue;
+            foreach (var station in stationList)
+            {
+                if (station.WaitingStations.Count < min)
                 {
-                    nextStationId= station.GetNextStation();
+                    stationToReturn = station;
+                    min = station.WaitingStations.Count;
                 }
             }
-            return nextStationId;
+            return stationToReturn;
         }
+
     }
 }

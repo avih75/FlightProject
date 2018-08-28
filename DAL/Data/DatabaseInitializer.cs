@@ -12,27 +12,27 @@ namespace FlightsManagerDAL.Data
     {
         protected override void Seed(Context context)
         {
-            StationModel station1 = new StationModel
+            BaseStationModel station1 = new BaseStationModel
             {
                 Strip = StripEnum.AirStrip
             };
 
-            StationModel station2 = new StationModel
+            BaseStationModel station2 = new BaseStationModel
             {
                 Strip = StripEnum.LandingStrip
             };
 
-           StationModel station3 = new StationModel
+           BaseStationModel station3 = new BaseStationModel
            {
                Strip = StripEnum.AirStrip
            };
 
-            StationModel station4 = new StationModel
+            BaseStationModel station4 = new BaseStationModel
             {
                 Strip = StripEnum.LandingStrip
             };
 
-            StationModel station5 = new StationModel
+            BaseStationModel station5 = new BaseStationModel
             {
                 Strip = StripEnum.AirLandingStrip
             };

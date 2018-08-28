@@ -19,9 +19,10 @@ namespace BL.Managers
             _stationsWaitingsManager = stationsWaitingsManager;
         }
 
-        public IEnumerable<StationModel> GetAll()
+        public IEnumerable<BaseStationModel> GetAll()
         {
             return _stationsRepository.GetAll();
         }
+
     }
 }

@@ -11,7 +11,7 @@ namespace RadarFlight.ViewModels
 {
     public class RadarViewModel
     {
-        private List<StationModel> StationsList { get; set; }
+        private List<BaseStationModel> StationsList { get; set; }
         public List<FlightModel> FlightList { get; set; }
         //FirstStationModel startStationProp {get;set;notify();}
 
@@ -26,6 +26,8 @@ namespace RadarFlight.ViewModels
 
         private void CreatFakeDataBase()
         {
+            StationsList = new List<BaseStationModel>();
+
             FlightList = new List<FlightModel>();
             FlightList.Add(new FlightModel()
             {
@@ -42,14 +44,13 @@ namespace RadarFlight.ViewModels
                 Time = DateTime.Now
             });
 
-            StationsList.Add(new StationModel());
-            StationsList.Add(new StationModel());
-            StationsList.Add(new StationModel());
-            StationsList.Add(new StationModel());
-            StationsList.Add(new StationModel());
-            StationsList.Add(new StationModel());
-            StationsList.Add(new StationModel());
-
+            StationsList.Add(new BaseStationModel());
+            StationsList.Add(new BaseStationModel());
+            StationsList.Add(new BaseStationModel());
+            StationsList.Add(new BaseStationModel());
+            StationsList.Add(new BaseStationModel());
+            StationsList.Add(new BaseStationModel());
+            StationsList.Add(new BaseStationModel());
         }
 
         private void CommandInit()

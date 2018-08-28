@@ -7,7 +7,7 @@ namespace Common.Interfaces
 {
     public interface IStationsWaitingsManager
     {
-        void FillStationsCollection(IEnumerable<StationModel> stations);
+        void FillStationsCollection(IEnumerable<BaseStationModel> stations);
 
         void AddStationToQueueOf(int waitingStationId, int queueStationId);
 

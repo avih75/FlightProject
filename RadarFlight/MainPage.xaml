@@ -53,6 +53,13 @@
                 </StackPanel>
             </Grid>
             <Grid x:Name="InMotion" Grid.Column="2"  Grid.Row="2" BorderBrush="Red" BorderThickness="1,1,1,1"/>
+            <Button Grid.Column="3" Grid.Row="1" Content="Press" FontSize="30">
+                <Button.Transitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition/>
+                    </TransitionCollection>
+                </Button.Transitions>
+            </Button>
         </Grid>
     </Grid>
 </Page>

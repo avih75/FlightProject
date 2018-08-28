@@ -1,37 +1,77 @@
-﻿using Common.Enums;
+﻿using Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Timers;
 
 namespace Common.Models
 {
-    public class StationModel
+    public class StationModel : BaseStationModel, IStationClient
     {
-        public int Id { get; set; }
-
-        public bool IsOccupied { get; set; }
-
-        public StripEnum Strip { get; set; }
-
-
-        public int? PlainId { get; set; }
-
-        public PlainModel Plain { get; set; }
-
-        public ICollection<StationModel> NextDepartureStations { get; set; }
-
-        public ICollection<StationModel> NextLandingStations { get; set; }
-
-        public ICollection<StationModel> WaitingStations { get; set; }
-
+        private readonly Timer timer;
 
         public StationModel()
         {
-            NextDepartureStations = new List<StationModel>();
+            timer = new Timer();
+            timer.Elapsed += FlightTimeEnded;
+        }
 
-            NextLandingStations = new List<StationModel>();
+        private void FlightTimeEnded(object sender, ElapsedEventArgs e)
+        {
+            timer.Stop();
+            BaseStationModel nextStation;
+            if (Flight.IsDeparture)
+            {
+                nextStation = GetBestStation(NextDepartureStations);
+            }
+            else
+            {
+                nextStation = GetBestStation(NextLandingStations);
+            }
+            nextStation.AddStation(this);
+        }
 
-            WaitingStations = new List<StationModel>();
+        private BaseStationModel GetBestStation(ICollection<BaseStationModel> nextStations)
+        {
+            // find the station with the shortest q
+            int min = int.MaxValue;
+            BaseStationModel stationToReturn = null;
+            foreach (BaseStationModel station in nextStations)
+            {
+                if (station.WaitingStations.Count < min)
+                    stationToReturn = station;
+            }
+            return stationToReturn;
+        }
+
+        public override void EvacuateStation()
+        {
+            Flight = null;
+            FlightId = null;
+            if (WaitingStations.Count > 0)
+                CallNextFlight();
+        }
+
+        public override void AddStation(IStationClient station)
+        {
+            WaitingStations.Add(station);
+            if (Flight == null)
+                CallNextFlight();
+        }
+
+        private void CallNextFlight()
+        {
+            if (WaitingStations.Count > 0)
+            {
+                Random rnd = new Random();
+                var nextStation = WaitingStations[0];
+                WaitingStations.Remove(nextStation);
+                Flight = nextStation.Flight;
+                FlightId = nextStation.FlightId;
+                nextStation.EvacuateStation();
+                timer.Interval = rnd.Next(1000, 5000);
+                timer.Start();
+            }
         }
     }
 }
