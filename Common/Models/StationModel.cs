@@ -14,17 +14,8 @@ namespace Common.Models
     {
         private event FlightEventHandler _flightEvent;
 
-        private readonly Timer timer;
-
-        public StationModel()
+        private void OperationTimeEnded()
         {
-            timer = new Timer();
-            timer.Elapsed += FlightTimeEnded;
-        }
-
-        private void FlightTimeEnded(object sender, ElapsedEventArgs e)
-        {
-            timer.Stop();
             if (IsLastStation)
             {
                 EvacuateStation();
@@ -54,10 +45,9 @@ namespace Common.Models
             return stationToReturn;
         }
 
-        public async override void EvacuateStation()
+        public override void EvacuateStation()
         {
-            Task t = new Task(OnFlightMoveEvent);
-            await t;
+            OnFlightMoveEvent();
             Flight = null;
             FlightId = null;
             if (WaitingStations.Count > 0)
@@ -76,19 +66,19 @@ namespace Common.Models
             _flightEvent += flightEvent;
         }
 
-        private void CallNextFlight()
+        private async void CallNextFlight()
         {
             if (WaitingStations.Count > 0)
             {
-                Random rnd = new Random();
+                //Random rnd = new Random();
                 var nextStation = WaitingStations[0];
                 WaitingStations.Remove(nextStation);
                 Flight = nextStation.Flight;
                 FlightId = nextStation.FlightId;
                 OnFlightMoveEvent();
                 nextStation.EvacuateStation();
-                timer.Interval = rnd.Next(1000, 5000);
-                timer.Start();
+                await Flight.StartOperation();
+                OperationTimeEnded();
             }
         }
 

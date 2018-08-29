@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Common.Models
 {
     public class FlightModel
     {
+        Random rnd = new Random();
 
         public int ID { get; set; }
 
@@ -20,6 +23,11 @@ namespace Common.Models
         public override string ToString()
         {
             return string.Format($"Name : {FlightName }  plain : {Plain.Name}  Date : {Time}  isDeparture : {IsDeparture}");
+        }
+
+        public async Task StartOperation()
+        {
+            Thread.Sleep(rnd.Next(1000, 5000));
         }
     }
 }
