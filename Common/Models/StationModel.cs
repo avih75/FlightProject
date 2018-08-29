@@ -3,6 +3,7 @@ using Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace Common.Models
@@ -53,9 +54,10 @@ namespace Common.Models
             return stationToReturn;
         }
 
-        public override void EvacuateStation()
+        public async override void EvacuateStation()
         {
-            OnFlightMoveEvent();
+            Task t = new Task(OnFlightMoveEvent);
+            await t;
             Flight = null;
             FlightId = null;
             if (WaitingStations.Count > 0)
@@ -97,7 +99,6 @@ namespace Common.Models
                 arg = new FlightEventArgs(Flight, null);
             else
                 arg = new FlightEventArgs(Flight, StationID);
-
             _flightEvent.Invoke(arg);
         }
     }

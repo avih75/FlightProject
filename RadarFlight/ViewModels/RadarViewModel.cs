@@ -12,6 +12,7 @@ namespace RadarFlight.ViewModels
     public class RadarViewModel
     {
         private List<StationModel> StationsList { get; set; }
+
         public List<FlightModel> FlightList { get; set; }
 
         public RadarViewModel(Grid inMotion)
