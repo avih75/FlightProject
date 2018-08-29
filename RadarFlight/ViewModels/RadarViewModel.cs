@@ -1,7 +1,10 @@
 ﻿using Common.Models;
+using Microsoft.AspNet.SignalR.Client;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -11,6 +14,14 @@ namespace RadarFlight.ViewModels
 {
     public class RadarViewModel
     {
+        const string apiUrl = "http://localhost:54780/";
+
+        private static readonly HttpClient client = new HttpClient();
+
+        private HubConnection hubConnection;
+
+        private IHubProxy hubProxy;
+
         private List<StationModel> StationsList { get; set; }
 
         public List<FlightModel> FlightList { get; set; }
@@ -18,9 +29,21 @@ namespace RadarFlight.ViewModels
         public RadarViewModel(Grid inMotion)
         {
             CreatFakeDataBase();
-            GetHubConection();
+            SignalR();
             GetDataToShow();
+        }
 
+        private void SignalR()
+        {
+            hubConnection = new HubConnection("http://localhost:54780/");
+            hubProxy = hubConnection.CreateHubProxy("FlightsHub");
+            hubConnection.Start();
+            RegisterToHubCalls();
+        }
+
+        private void RegisterToHubCalls()
+        {
+            hubProxy.On<FlightModel, int>("FlightMove", (flight, stationId) => MakeMove(flight, stationId));
         }
 
         private void CreatFakeDataBase()
@@ -44,17 +67,16 @@ namespace RadarFlight.ViewModels
             });
         }
 
-        private void GetHubConection()
-        {
-            // get the contact to the hub
-            // sing to get change for flight and call make move
-        }
-
         private void GetDataToShow()
         {
-            //make get http request for flight lisdt
-            // make get http request for stationlist
+            StationsList = JsonConvert.DeserializeObject<IEnumerable<StationModel>>(MakeHttpGet("Api/Stations")).ToList();
+            FlightList = JsonConvert.DeserializeObject<IEnumerable<FlightModel>>(MakeHttpGet("Api/Flights")).ToList();
+        }
 
+        private string MakeHttpGet(string controlerName)
+        {
+            var respons = client.GetAsync(apiUrl + controlerName).Result;
+            return respons.Content.ReadAsStringAsync().Result;
         }
 
         private void GenerateGrid()
@@ -95,7 +117,6 @@ namespace RadarFlight.ViewModels
 
         private void MakeMove(FlightModel flight, int stationId)
         {
-            //
             // make move of flight picture to the new station
             // update Dictionery Flights
         }

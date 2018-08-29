@@ -25,7 +25,7 @@ namespace BL.Managers
             }
         }
         
-
+        
         public FlightsTimeManager()
         {
             SetManagerFields();

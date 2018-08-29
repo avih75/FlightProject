@@ -11,7 +11,7 @@ namespace DAL.Data
     {
         public DbSet<PlainModel> Plains { get; set; }
         public DbSet<FlightModel> Flights { get; set; }
-        public DbSet<BaseStationModel> Stations { get; set; }
+        public DbSet<StationModel> Stations { get; set; }
 
         public Context(): base("ConnectionString")
         {

@@ -11,7 +11,7 @@ namespace DAL.Data.Repositories.SqlRepositories
 {
     class SqlStationsRepository : IStationsRepository
     {
-        public void Add(BaseStationModel station)
+        public void Add(StationModel station)
         {
             using (Context context = new Context())
             {
@@ -20,7 +20,7 @@ namespace DAL.Data.Repositories.SqlRepositories
             }
         }
 
-        public IEnumerable<BaseStationModel> GetAll()
+        public IEnumerable<StationModel> GetAll()
         {
             using (Context context = new Context())
             {
@@ -28,7 +28,7 @@ namespace DAL.Data.Repositories.SqlRepositories
             }
         }
 
-        public BaseStationModel GetStation(int stationId)
+        public StationModel GetStation(int stationId)
         {
             using (Context context = new Context())
             {
@@ -46,7 +46,7 @@ namespace DAL.Data.Repositories.SqlRepositories
             }
         }
 
-        public void Update(BaseStationModel station)
+        public void Update(StationModel station)
         {
             using (Context context = new Context())
             {

@@ -17,6 +17,7 @@ namespace FlightCreator
         private static readonly HttpClient client = new HttpClient();
         static Models.FlightFactoryModel factoryFlight;
         static Timer timer;
+
         static void Main(string[] args)
         {
             factoryFlight = new Models.FlightFactoryModel();
@@ -28,6 +29,7 @@ namespace FlightCreator
             timer.Start();
             Console.Read();
         }
+
         private static void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             FlightModel newFlight = factoryFlight.CreateFlight();

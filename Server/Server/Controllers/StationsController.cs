@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,13 +10,16 @@ namespace Server.Controllers
 {
     public class StationsController : ApiController
     {
-        public StationsController()
-        {
+        private readonly IStationsManager _stationsManager;
 
-        }
-        public IHttpActionResult Get()
+        public StationsController(IStationsManager stationsManager)
         {
-            return Ok();
+            _stationManager = stationsManager;
+        }
+
+        public IEnumerable<StationModel> Get()
+        {
+            return _stationsManager.GetAll();
         }
     }
 }

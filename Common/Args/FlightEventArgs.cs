@@ -7,13 +7,14 @@ namespace Common.Args
 {
     public class FlightEventArgs : EventArgs
     {
-        private readonly FlightModel _flight;
-        private readonly int? _stationId;
-
         public FlightEventArgs(FlightModel flight, int? stationId)
         {
-            _flight = flight;
-            _stationId = stationId;
+            Flight = flight;
+            StationId = stationId;
         }
+
+        public FlightModel Flight { get; }
+
+        public int? StationId { get; }
     }
 }

@@ -46,5 +46,10 @@ namespace Common.Models
         {
 
         }
+
+        public virtual void RegisterFlightEvent()
+        {
+
+        }
     }
 }

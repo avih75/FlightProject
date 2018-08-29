@@ -26,6 +26,11 @@ namespace Server.Controllers
             _flightsManager.RegisterToTimerEvent(OnTimerEvent);
         }
 
+        public IEnumerable<FlightModel> Get()
+        {
+            return _flightsManager.GetAll();
+        }
+
         [HttpPost]
         [ResponseType(typeof(FlightModel))]
         public IHttpActionResult AddFlight(FlightModel flight)

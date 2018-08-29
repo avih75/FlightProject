@@ -104,6 +104,6 @@ namespace BL.Managers
         {
             FlightEnterEvent.Invoke(args);
         }
-        
+
     }
 }

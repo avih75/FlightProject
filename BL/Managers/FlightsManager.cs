@@ -18,10 +18,11 @@ namespace BL.Managers
 
         private readonly IStationsManager _stationsManager;
 
-        private event TimerEventHandler _timerEventHandler;
+
 
         
-        public FlightsManager(IFlightsRepository flightsRepository, IFlightsTimeManager departureFlightsManager, IFlightsTimeManager landingFlightsRepository, IStationsManager stationsManager)
+        public FlightsManager(IFlightsRepository flightsRepository, IFlightsTimeManager departureFlightsManager,
+                              IFlightsTimeManager landingFlightsRepository, IStationsManager stationsManager)
         {
             _flightsRepository = flightsRepository;
             _departureFlightsTimeManager = departureFlightsManager;
@@ -33,13 +34,29 @@ namespace BL.Managers
             _stationsManager.RegisterToFlightEvent(OnFlightEnterEvent);
         }
 
+        public IEnumerable<FlightModel> GetAll()
+        {
+            return _flightsRepository.GetAll();
+        }
+
         private void OnFlightEnterEvent(FlightEventArgs args)
         {
-            //updating queues
+            UpdateFlightsManager(args.Flight);
             //notify client
             //updating repository
         }
 
+        private void UpdateFlightsManager(FlightModel flight)
+        {
+            if (flight.IsDeparture)
+            {
+                
+            }
+            else
+            {
+
+            }
+        }
         public void AddFlight(FlightModel flight)
         {
             _flightsRepository.Add(flight);
@@ -63,11 +80,6 @@ namespace BL.Managers
             _stationsManager.FlightTimeArrivedEvent(flight);
         }
 
-        public void RegisterToTimerEvent(TimerEventHandler onTimerElapsed)
-        {
-            _timerEventHandler += onTimerElapsed;
-        }
-
         public FlightModel GetFlight(bool isLanding)
         {
             int flightId = 0;
@@ -86,6 +98,10 @@ namespace BL.Managers
             return _flightsRepository.GetFlight(flightId);
         }
 
-       
+        //private event TimerEventHandler _timerEventHandler;
+        //public void RegisterToTimerEvent(TimerEventHandler onTimerElapsed)
+        //{
+        //    _timerEventHandler += onTimerElapsed;
+        //}
     }
 }

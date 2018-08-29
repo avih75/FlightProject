@@ -12,7 +12,10 @@ namespace Common.Interfaces
     {
         void AddFlight(FlightModel flight);
 
-        void RegisterToTimerEvent(TimerEventHandler onTimerElapsed);
+       //void RegisterToTimerEvent(TimerEventHandler onTimerElapsed);
+
         FlightModel GetFlight(bool isLanding);
+
+        IEnumerable<FlightModel> GetAll();
     }
 }
